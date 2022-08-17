@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+
+    <link rel="stylesheet" href="style.css"/>
+    <script src="index.js" defer></script>
+
+</head>
+<body>
+    <h1 id="player1"></h1>
+    <form style="text-align:center" id="player1Form">
+        <label for="player1">Player 1:</label><br>
+        <input type="text" id="player1Value" name="player1" value="" onfocusout="savePlayer1()"><br>
+    </form>
+
+    <h1 id="player2"></h1>
+    <form style="text-align:center" id="player2Form">
+        <label for="player2">Player 2:</label><br>
+        <input type="text" id="player2Value" name="player2" value="" onfocusout="savePlayer2()"><br>
+    </form> 
+
+    <p id="player1Label" value=""></p><br>
+    <p id="player2Label" value=""></p><br>
+
+    <div id="gameBoard">
+    <section>
+        <input type="text" class="letterBox" maxlength="1">
+        <input type="text" class="letterBox" maxlength="1">
+        <input type="text" class="letterBox" maxlength="1">
+    </section>
+    <section>
+        <input type="text" class="letterBox" maxlength="1">
+        <input type="text" class="letterBox" maxlength="1">
+        <input type="text" class="letterBox" maxlength="1">
+    </section>
+    <section>
+        <input type="text" class="letterBox" maxlength="1">
+        <input type="text" class="letterBox" maxlength="1">
+        <input type="text" class="letterBox" maxlength="1">
+    </section>
+    </div>
+    <!--
+    <table id="gameBoard">
+        <tr>
+          <td>X</td>
+          <td>O</td>
+          <td>X</td>
+        </tr>
+        <tr>
+          <td>X</td>
+          <td>X</td>
+          <td>X</td>
+        </tr>
+        <tr>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+        </tr>
+     </table> -->
+
+     <button id="resetBtn" onclick="resetGame()">Reset Game</button>
+
+    </label>
+    
+</body>
+</html>
