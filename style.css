@@ -13,12 +13,13 @@ input {
     background-color: aquamarine;
     height: 2em;
     font-size: large;
+    caret-color: transparent;
 }
 
 p {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    font-size: xx-large;
+    font-weight: medium;
+    font-size: large;
     margin-top: 2px;
 }
 
@@ -39,9 +40,10 @@ table {
     height: 60px;
     background-color: blue;
     /*margin-top: 1em; */
-    font-size: small;
+    font-size: 12vh;
     text-align: center;
     font-size: large;
+    
 }
 
 section {
@@ -50,6 +52,13 @@ section {
 
 button {
     text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.currentPlayerLabel {
+    display: flex;
+    justify-content: center;
     margin-right: auto;
     margin-left: auto;
 }

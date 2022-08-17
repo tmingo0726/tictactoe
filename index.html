@@ -20,17 +20,18 @@
     <h1 id="player2"></h1>
     <form style="text-align:center" id="player2Form">
         <label for="player2">Player 2:</label><br>
-        <input type="text" id="player2Value" name="player2" value="" onfocusout="savePlayer2()"><br>
+        <input type="text" id="player2Value" disabled name="player2" value="" onfocusout="savePlayer2()"><br>
     </form> 
 
-    <p id="player1Label" value=""></p><br>
-    <p id="player2Label" value=""></p><br>
+    <button id="startBtn" onclick="startGame()" disabled>Start Game</button>
 
+    <label id="currentPlayerLabel" value=""></label><br>
+    
     <div id="gameBoard">
     <section>
-        <input type="text" class="letterBox" maxlength="1">
-        <input type="text" class="letterBox" maxlength="1">
-        <input type="text" class="letterBox" maxlength="1">
+       <input type="text" class="letterBox" maxlength="1" disabled>
+       <input type="text" class="letterBox" maxlength="1" disabled>
+       <input type="text" class="letterBox" maxlength="1" disabled>
     </section>
     <section>
         <input type="text" class="letterBox" maxlength="1">
@@ -43,26 +44,11 @@
         <input type="text" class="letterBox" maxlength="1">
     </section>
     </div>
-    <!--
-    <table id="gameBoard">
-        <tr>
-          <td>X</td>
-          <td>O</td>
-          <td>X</td>
-        </tr>
-        <tr>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
-        </tr>
-        <tr>
-          <td>O</td>
-          <td>O</td>
-          <td>O</td>
-        </tr>
-     </table> -->
+   
+    <div id="currentPlayer"></div>
 
      <button id="resetBtn" onclick="resetGame()">Reset Game</button>
+     
 
     </label>
     
