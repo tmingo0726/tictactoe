@@ -11,46 +11,45 @@
 
 </head>
 <body>
-    <h1 id="player1"></h1>
-    <form style="text-align:center" id="player1Form">
-        <label for="player1">Player 1:</label><br>
-        <input type="text" id="player1Value" name="player1" value="" onfocusout="savePlayer1()"><br>
+    <h1>Tom's TIC TAC TOE</h1>
+    
+    <form style="text-align:center" tabindex="1" id="player1Form">
+        <input type="text" placeholder="Player 1's Name" id="player1Value" name="player1" value="" onfocusout="savePlayer1()">
+        <input type="text" placeholder="Player 2's Name" id="player2Value" disabled name="player2" value="" onfocusout="savePlayer2()">
     </form>
 
-    <h1 id="player2"></h1>
-    <form style="text-align:center" id="player2Form">
-        <label for="player2">Player 2:</label><br>
-        <input type="text" id="player2Value" disabled name="player2" value="" onfocusout="savePlayer2()"><br>
-    </form> 
+    <form style="text-align:center">
+        <input type="checkbox" id="computer" name="computer" value="Computer" onclick="computerCheck()">
+        <label for="computer">Computer Opponent</label><br>
+    </form>
 
-    <button id="startBtn" onclick="startGame()" disabled>Start Game</button>
-
-    <label id="currentPlayerLabel" value=""></label><br>
+    <label id="currentPlayerLabel" value=""></label>
     
-    <div id="gameBoard">
-    <section>
-       <input type="text" class="letterBox" maxlength="1" disabled>
-       <input type="text" class="letterBox" maxlength="1" disabled>
-       <input type="text" class="letterBox" maxlength="1" disabled>
+    <div id="gameBoard" tabindex="-1">
+
+    <section class="container">
+       <div id="one" type="text" class="letterBox"></div>
+       <div id="two" type="text" class="letterBox"></div>
+       <div id="three" type="text" class="letterBox"></div>
     </section>
-    <section>
-        <input type="text" class="letterBox" maxlength="1">
-        <input type="text" class="letterBox" maxlength="1">
-        <input type="text" class="letterBox" maxlength="1">
+    <section class="container">
+        <div type="text" class="letterBox"></div>
+        <div type="text" class="letterBox"></div>
+        <div type="text" class="letterBox"></div>
     </section>
-    <section>
-        <input type="text" class="letterBox" maxlength="1">
-        <input type="text" class="letterBox" maxlength="1">
-        <input type="text" class="letterBox" maxlength="1">
+    <section class="container">
+        <div type="text" class="letterBox"></div>
+        <div type="text" class="letterBox"></div>
+        <div type="text" class="letterBox"></div>
     </section>
     </div>
    
     <div id="currentPlayer"></div>
 
-     <button id="resetBtn" onclick="resetGame()">Reset Game</button>
-     
-
-    </label>
     
+    <button id="startBtn" tabindex="3" onclick="startGame()">Start Game</button>
+    <button id="resetBtn" onclick="resetGame()">Reset Game</button>
+    
+       
 </body>
 </html>
