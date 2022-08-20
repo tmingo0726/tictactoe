@@ -241,13 +241,16 @@ const computerCheck = () => {
 const checkForBestSquare = () => {
 
     let tempCheck = [];
+    let emptyArr = [];
     let length = 0;
     let index = 0;
     
     for (i = 0; i < boardArr.length; i++) {
         if (boardArr[i].innerHTML === 'O') {
             tempCheck.push(i);
-        } 
+        } else if (boardArr[i].innerHTML === "") {
+            emptyArr.push(i);
+        }
     }
 
     length = tempCheck.length;
@@ -297,15 +300,59 @@ const checkForBestSquare = () => {
             else console.log("we went straight thru");
             
             break;
-        default:
-            for (let i = 0; i < boardArr.length; i++) {
-                if(boardArr[i].innerHTML === "") {
-                    index = i;
-                    break;
-                }
-            }
+            
+        case 3 :
+            for (i = 0; i < 3; i++) {
+                switch (emptyArr[i]) {
+                    case 7 :
+                        if ((tempCheck.includes(1) && tempCheck.includes(4)) ||
+                            (tempCheck.includes(6) && tempCheck.includes(8)))
+                                index = 7;
+                        break;
+                    case 2 :
+                        if ((tempCheck.includes(5) && tempCheck.includes(8)) ||
+                            (tempCheck.includes(4) && tempCheck.includes(6)))
+                                index = 2;
+                        break;
+                    case 5 :
+                        if ((tempCheck.includes(2) && tempCheck.includes(8)) ||
+                            (tempCheck.includes(3) && tempCheck.includes(4)))
+                                index = 2;
+                        break;
+                    case 6 :
+                        console.log("in case 6");
+                        if ((tempCheck.includes(0) && tempCheck.includes(3)) ||
+                            (tempCheck.includes(7) && tempCheck.includes(8)) ||
+                            (tempCheck.includes(2) && tempCheck.includes(4)))
+                                index = 6;
+                        break;
+                    case 3 :
+                        console.log("in case 6");
+                        if ((tempCheck.includes(0) && tempCheck.includes(6)) ||
+                            (tempCheck.includes(4) && tempCheck.includes(5)))
+                                index = 3;
+                        break;
+                    case 8 :
+                        console.log("in case 6");
+                        if ((tempCheck.includes(0) && tempCheck.includes(4)) ||
+                            (tempCheck.includes(6) && tempCheck.includes(7)) ||
+                            (tempCheck.includes(2) && tempCheck.includes(5)))
+                                index = 8;
+                        break;
+
+                    default :
+                        console.log("No case for empty array index ", emptyArr[i]);
+                        break;
+                } //end switch emptyArr[i]
+            } //end for
             break;
-    }
+        default :
+            for (i = 0; i < boardArr.length; i++)
+                if (boardArr[i].innerHTML === "")
+                    index = i;
+            break;
+    }//end switch
+
     boardArr[index].innerHTML = 'X';
     boardArr[index].style.pointerEvents = "none";
 }
