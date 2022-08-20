@@ -262,107 +262,57 @@ const checkForBestSquare = () => {
         }
         return;
     } 
-    switch(length) {
-        case 2 :
-            if ((tempCheck.includes(2) && tempCheck.includes(4)) || 
-                (tempCheck.includes(0) && tempCheck.includes(3)) ||
-                (tempCheck.includes(7) && tempCheck.includes(8))) index = 6;
 
-            else if ((tempCheck.includes(3) && tempCheck.includes(4)) ||
-                     (tempCheck.includes(2) && tempCheck.includes(8))) index = 5;
+    for (i = 0; i < emptyArr.length; i++) {
+        switch (emptyArr[i]) {
+            case 7 :
+                if ((tempCheck.includes(1) && tempCheck.includes(4)) ||
+                    (tempCheck.includes(6) && tempCheck.includes(8)))
+                        index = 7;
+                break;
+            case 2 :
+                if ((tempCheck.includes(5) && tempCheck.includes(8)) ||
+                    (tempCheck.includes(4) && tempCheck.includes(6)))
+                        index = 2;
+                break;
+            case 5 :
+                if ((tempCheck.includes(2) && tempCheck.includes(8)) ||
+                    (tempCheck.includes(3) && tempCheck.includes(4)))
+                        index = 5;
+                break;
+            case 6 :
+                console.log("in case 6");
+                if ((tempCheck.includes(0) && tempCheck.includes(3)) ||
+                    (tempCheck.includes(7) && tempCheck.includes(8)) ||
+                    (tempCheck.includes(2) && tempCheck.includes(4)))
+                        index = 6;
+                break;
+            case 3 :
+                console.log("in case 3");
+                if ((tempCheck.includes(0) && tempCheck.includes(6)) ||
+                    (tempCheck.includes(4) && tempCheck.includes(5)))
+                        index = 3;
+                break;
+            case 8 :
+                console.log("in case 8");
+                if ((tempCheck.includes(0) && tempCheck.includes(4)) ||
+                    (tempCheck.includes(6) && tempCheck.includes(7)) ||
+                    (tempCheck.includes(2) && tempCheck.includes(5)))
+                        index = 8;
+                break;
+            case 1 :
+                console.log("in case 1");
+                if ((tempCheck.includes(0) && tempCheck.includes(2)) ||
+                    (tempCheck.includes(4) && tempCheck.includes(7)))
+                        index = 1;
+                break;
 
-            else if ((tempCheck.includes(4) && tempCheck.includes(5)) ||
-                     (tempCheck.includes(0) && tempCheck.includes(6))) index = 3;
-
-            else if ((tempCheck.includes(4) && tempCheck.includes(6)) ||
-                     (tempCheck.includes(5) && tempCheck.includes(8)) ||
-                     (tempCheck.includes(0) && tempCheck.includes(1))) index = 2;
-
-            else if ((tempCheck.includes(1) && tempCheck.includes(4)) ||
-                     (tempCheck.includes(6) && tempCheck.includes(8))) index = 7;
-
-            else if ((tempCheck.includes(4) && tempCheck.includes(7)) ||
-                     (tempCheck.includes(0) && tempCheck.includes(2))) index = 1;
-
-            else if ((tempCheck.includes(2) && tempCheck.includes(5)) || 
-                     (tempCheck.includes(0) && tempCheck.includes(4)) ||
-                     (tempCheck.includes(6) && tempCheck.includes(7))) index = 8;
-
-            else if ((tempCheck.includes(2) && tempCheck.includes(6)) || 
-                     (tempCheck.includes(0) && tempCheck.includes(8)) ||
-                     (tempCheck.includes(3) && tempCheck.includes(5)) ||
-                     (tempCheck.includes(1) && tempCheck.includes(7))) index = 4;
-
-            else if ((tempCheck.includes(3) && tempCheck.includes(6)) ||
-                     (tempCheck.includes(1) && tempCheck.includes(2)) ||
-                     (tempCheck.includes(4) && tempCheck.includes(8))) index = 0;
-            
-            else console.log("we went straight thru");
-            
-            break;
-            
-        case 3 :
-            for (i = 0; i < 4; i++) {
-                switch (emptyArr[i]) {
-                    case 7 :
-                        if ((tempCheck.includes(1) && tempCheck.includes(4)) ||
-                            (tempCheck.includes(6) && tempCheck.includes(8)))
-                                index = 7;
-                        break;
-                    case 2 :
-                        if ((tempCheck.includes(5) && tempCheck.includes(8)) ||
-                            (tempCheck.includes(4) && tempCheck.includes(6)))
-                                index = 2;
-                        break;
-                    case 5 :
-                        if ((tempCheck.includes(2) && tempCheck.includes(8)) ||
-                            (tempCheck.includes(3) && tempCheck.includes(4)))
-                                index = 5;
-                        break;
-                    case 6 :
-                        console.log("in case 6");
-                        if ((tempCheck.includes(0) && tempCheck.includes(3)) ||
-                            (tempCheck.includes(7) && tempCheck.includes(8)) ||
-                            (tempCheck.includes(2) && tempCheck.includes(4)))
-                                index = 6;
-                        break;
-                    case 3 :
-                        console.log("in case 3");
-                        if ((tempCheck.includes(0) && tempCheck.includes(6)) ||
-                            (tempCheck.includes(4) && tempCheck.includes(5)))
-                                index = 3;
-                        break;
-                    case 8 :
-                        console.log("in case 8");
-                        if ((tempCheck.includes(0) && tempCheck.includes(4)) ||
-                            (tempCheck.includes(6) && tempCheck.includes(7)) ||
-                            (tempCheck.includes(2) && tempCheck.includes(5)))
-                                index = 8;
-                        break;
-
-                    case 1 :
-                        console.log("in case 1");
-                        if ((tempCheck.includes(0) && tempCheck.includes(2)) ||
-                            (tempCheck.includes(4) && tempCheck.includes(7)))
-                                index = 1;
-                        break;
-
-                    default :
-                        console.log("No case for empty array index ", emptyArr[i]);
-                        break;
-                } //end switch emptyArr[i]
-            } //end for
-            break;
-        default :
-            console.log("Inside the default case");
-            for (i = 0; i < boardArr.length; i++)
-                if (boardArr[i].innerHTML === "") {
-                    index = i;
-                    break;
-                }
-            break;
-    }//end switch
-
+            default :
+                console.log("No case for empty array index ", emptyArr[i]);
+                break;
+        } //end switch emptyArr[i]
+    }
+    
     //After all of the checks there are still situations where any square is safe to use 
     //so in that case just get the first empty one.
     if (index === -1) {
@@ -379,25 +329,8 @@ const checkForBestSquare = () => {
 
 const findSquare = () => {
 
-    //First let's see if the middle one is taken
-    /*
-    if (boardArr[4].innerHTML === "") {
-        boardArr[4].innerHTML = "X";
-        boardArr[4].style.pointerEvents = "none";
-    } else { */
-        checkForBestSquare();
-    //}
-    /*
-        //Let's just find any empty one for now...
-        for (let i = 0; i < boardArr.length; i++) {
-            if (boardArr[i].innerHTML === "") {
-                boardArr[i].innerHTML = "X";
-                boardArr[i].style.pointerEvents = "none";
-                break;
-            }
-        }
-    }*/
-
+    checkForBestSquare();
+    
     //Since the computer pick does not go thru the eventhandler we need to force the checkForWinner call
     if (checkForWinner()) {
         disableAllInputs();
@@ -436,7 +369,7 @@ gameArea.addEventListener('click', function(clickEvent) {
         } else {
            renderCurrentPlayer();
            if (whoseTurn === "Computer") {
-                findSquare();
+                setTimeout(findSquare, 500);
            }
         }
     }
