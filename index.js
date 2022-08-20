@@ -243,7 +243,7 @@ const checkForBestSquare = () => {
     let tempCheck = [];
     let emptyArr = [];
     let length = 0;
-    let index = 0;
+    let index = -1;
     
     for (i = 0; i < boardArr.length; i++) {
         if (boardArr[i].innerHTML === 'O') {
@@ -302,7 +302,7 @@ const checkForBestSquare = () => {
             break;
             
         case 3 :
-            for (i = 0; i < 3; i++) {
+            for (i = 0; i < 4; i++) {
                 switch (emptyArr[i]) {
                     case 7 :
                         if ((tempCheck.includes(1) && tempCheck.includes(4)) ||
@@ -317,7 +317,7 @@ const checkForBestSquare = () => {
                     case 5 :
                         if ((tempCheck.includes(2) && tempCheck.includes(8)) ||
                             (tempCheck.includes(3) && tempCheck.includes(4)))
-                                index = 2;
+                                index = 5;
                         break;
                     case 6 :
                         console.log("in case 6");
@@ -327,17 +327,24 @@ const checkForBestSquare = () => {
                                 index = 6;
                         break;
                     case 3 :
-                        console.log("in case 6");
+                        console.log("in case 3");
                         if ((tempCheck.includes(0) && tempCheck.includes(6)) ||
                             (tempCheck.includes(4) && tempCheck.includes(5)))
                                 index = 3;
                         break;
                     case 8 :
-                        console.log("in case 6");
+                        console.log("in case 8");
                         if ((tempCheck.includes(0) && tempCheck.includes(4)) ||
                             (tempCheck.includes(6) && tempCheck.includes(7)) ||
                             (tempCheck.includes(2) && tempCheck.includes(5)))
                                 index = 8;
+                        break;
+
+                    case 1 :
+                        console.log("in case 1");
+                        if ((tempCheck.includes(0) && tempCheck.includes(2)) ||
+                            (tempCheck.includes(4) && tempCheck.includes(7)))
+                                index = 1;
                         break;
 
                     default :
@@ -347,12 +354,25 @@ const checkForBestSquare = () => {
             } //end for
             break;
         default :
+            console.log("Inside the default case");
             for (i = 0; i < boardArr.length; i++)
-                if (boardArr[i].innerHTML === "")
+                if (boardArr[i].innerHTML === "") {
                     index = i;
+                    break;
+                }
             break;
     }//end switch
 
+    //After all of the checks there are still situations where any square is safe to use 
+    //so in that case just get the first empty one.
+    if (index === -1) {
+        for (i = 0; i < boardArr.length; i++) {
+            if (boardArr[i].innerHTML === "") {
+                index = i;
+                break;
+            }
+        }
+    }
     boardArr[index].innerHTML = 'X';
     boardArr[index].style.pointerEvents = "none";
 }
