@@ -13,11 +13,15 @@ let playerTwo = "";
 let whoseTurn = "";
 
 
+//Store off the whoseTurn variable as we enter the first player's name.
+//Return focus to player 2.
 const savePlayer1 = () => {
     
     playerOne = document.getElementById("player1Value").value;
     whoseTurn = playerOne;
     player2.disabled = false;
+    player2.setSelectionRange(0, 0);
+    player2.focus();
 }
 
 const savePlayer2 = () => {
@@ -27,6 +31,7 @@ const savePlayer2 = () => {
         startButton.disabled = false;
 }
 
+//Either used to reset an incomplete game or start a new one with the same players.
 const resetGame = () => {
 
     boardArr.forEach(boardArr => {
@@ -100,6 +105,7 @@ const checkColumns = () => {
 const checkIfSame = (str, arr) => {
 
     let result = false;
+    let indexArr = [];
     
     result = arr.every(areSame);
     
@@ -107,49 +113,36 @@ const checkIfSame = (str, arr) => {
         switch(str) {
 
             case "r1":
-                boardArr[0].style.backgroundColor = "red";
-                boardArr[1].style.backgroundColor = "red";
-                boardArr[2].style.backgroundColor = "red";
+                indexArr = [0,1,2];
                 break;
             case "r2":
-                boardArr[3].style.backgroundColor = "red";
-                boardArr[4].style.backgroundColor = "red";
-                boardArr[5].style.backgroundColor = "red";
+                indexArr = [3,4,5];
                 break;
             case "r3":
-                boardArr[6].style.backgroundColor = "red";
-                boardArr[7].style.backgroundColor = "red";
-                boardArr[8].style.backgroundColor = "red";
+                indexArr = [6,7,8];
                 break;
             case "c1":
-                boardArr[0].style.backgroundColor = "red";
-                boardArr[3].style.backgroundColor = "red";
-                boardArr[6].style.backgroundColor = "red";
+                indexArr = [0,3,6];
                 break;
             case "c2":
-                boardArr[1].style.backgroundColor = "red";
-                boardArr[4].style.backgroundColor = "red";
-                boardArr[7].style.backgroundColor = "red";
+                indexArr = [1,4,7];
                 break;
             case "c3":
-                boardArr[2].style.backgroundColor = "red";
-                boardArr[5].style.backgroundColor = "red";
-                boardArr[8].style.backgroundColor = "red";
+                indexArr = [2,5,8];
                 break;
             case "d1":
-                boardArr[0].style.backgroundColor = "red";
-                boardArr[4].style.backgroundColor = "red";
-                boardArr[8].style.backgroundColor = "red";
+                indexArr = [0,4,8];
                 break;
             case "d2":
-                boardArr[2].style.backgroundColor = "red";
-                boardArr[4].style.backgroundColor = "red";
-                boardArr[6].style.backgroundColor = "red";
+                indexArr = [2,4,6];
                 break;    
             default:
                 break;
-        }
-    }
+        } //end switch
+        for (i = 0; i < 3; i++) {
+            boardArr[indexArr[i]].style.backgroundColor = "yellow";
+        } //end for
+    } //end result
     return result;
 }
 
