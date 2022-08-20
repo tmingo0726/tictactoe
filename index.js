@@ -242,34 +242,84 @@ const checkForBestSquare = () => {
 
     let tempCheck = [];
     let length = 0;
-
+    let index = 0;
+    
     for (i = 0; i < boardArr.length; i++) {
         if (boardArr[i].innerHTML === 'O') {
             tempCheck.push(i);
-        }
+        } 
     }
 
-    //Check against diagonals
-    //length = tempCheck.length;
-    for (i = 0; i < tempCheck.length; i++) {
-        if (boardArr[tempCheck[i]] === 4) {
-            if (boardArr[2].innerHTML === "")
+    length = tempCheck.length;
+    if (length === 1) {
+        if (tempCheck.includes(4)) {
+            boardArr[0].innerHTML = 'X';
+        } else {
+            boardArr[4].innerHTML = "X";
         }
-        if (boardArr[tempCheck].innerHTML === "") {
+        return;
+    } 
+    switch(length) {
+        case 2 :
+            if ((tempCheck.includes(2) && tempCheck.includes(4)) || 
+                (tempCheck.includes(0) && tempCheck.includes(3)) ||
+                (tempCheck.includes(7) && tempCheck.includes(8))) index = 6;
 
-        }
+            else if ((tempCheck.includes(3) && tempCheck.includes(4)) ||
+                     (tempCheck.includes(2) && tempCheck.includes(8))) index = 5;
+
+            else if ((tempCheck.includes(4) && tempCheck.includes(5)) ||
+                     (tempCheck.includes(0) && tempCheck.includes(6))) index = 3;
+
+            else if ((tempCheck.includes(4) && tempCheck.includes(6)) ||
+                     (tempCheck.includes(5) && tempCheck.includes(8)) ||
+                     (tempCheck.includes(0) && tempCheck.includes(1))) index = 2;
+
+            else if ((tempCheck.includes(1) && tempCheck.includes(4)) ||
+                     (tempCheck.includes(6) && tempCheck.includes(8))) index = 7;
+
+            else if ((tempCheck.includes(4) && tempCheck.includes(7)) ||
+                     (tempCheck.includes(0) && tempCheck.includes(2))) index = 1;
+
+            else if ((tempCheck.includes(2) && tempCheck.includes(5)) || 
+                     (tempCheck.includes(0) && tempCheck.includes(4)) ||
+                     (tempCheck.includes(6) && tempCheck.includes(7))) index = 8;
+
+            else if ((tempCheck.includes(2) && tempCheck.includes(6)) || 
+                     (tempCheck.includes(0) && tempCheck.includes(8)) ||
+                     (tempCheck.includes(3) && tempCheck.includes(5)) ||
+                     (tempCheck.includes(1) && tempCheck.includes(7))) index = 4;
+
+            else if ((tempCheck.includes(3) && tempCheck.includes(6)) ||
+                     (tempCheck.includes(1) && tempCheck.includes(2)) ||
+                     (tempCheck.includes(4) && tempCheck.includes(8))) index = 0;
+            
+            else console.log("we went straight thru");
+            
+            break;
+        default:
+            for (let i = 0; i < boardArr.length; i++) {
+                if(boardArr[i].innerHTML === "") {
+                    index = i;
+                    break;
+                }
+            }
+            break;
     }
+    boardArr[index].innerHTML = 'X';
+    boardArr[index].style.pointerEvents = "none";
 }
 
 const findSquare = () => {
 
     //First let's see if the middle one is taken
+    /*
     if (boardArr[4].innerHTML === "") {
         boardArr[4].innerHTML = "X";
         boardArr[4].style.pointerEvents = "none";
-    } else {
+    } else { */
         checkForBestSquare();
-    }
+    //}
     /*
         //Let's just find any empty one for now...
         for (let i = 0; i < boardArr.length; i++) {
