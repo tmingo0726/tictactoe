@@ -231,32 +231,102 @@ const computerCheck = () => {
     }
 }
 
-const checkForBestSquare = () => {
-
-    let tempCheck = [];
-    let emptyArr = [];
-    let length = 0;
+//Instead of focusing on the opponent first, the computer should check to see if it
+//has a winning square to occupy. That is what this routine does.
+const checkComputerBestSquare = (emptyArr, computerArr) => {
     let index = -1;
-    
-    for (i = 0; i < boardArr.length; i++) {
-        if (boardArr[i].innerHTML === 'O') {
-            tempCheck.push(i);
-        } else if (boardArr[i].innerHTML === "") {
-            emptyArr.push(i);
-        }
-    }
-
-    length = tempCheck.length;
-    if (length === 1) {
-        if (tempCheck.includes(4)) {
-            boardArr[0].innerHTML = 'X';
-        } else {
-            boardArr[4].innerHTML = "X";
-        }
-        return;
-    } 
 
     for (i = 0; i < emptyArr.length; i++) {
+        switch (emptyArr[i]) {
+            case 0 :
+                if ((computerArr.includes(1) && computerArr.includes(2)) ||
+                    (computerArr.includes(3) && computerArr.includes(6)) ||
+                    (computerArr.includes(4) && computerArr.includes(8)))
+                        index = 0;
+                break;
+            case 7 :
+                if ((computerArr.includes(1) && computerArr.includes(4)) ||
+                    (computerArr.includes(6) && computerArr.includes(8)))
+                        index = 7;
+                break;
+            case 2 :
+                if ((computerArr.includes(5) && computerArr.includes(8)) ||
+                    (computerArr.includes(0) && computerArr.includes(1)) ||
+                    (computerArr.includes(4) && computerArr.includes(6)))
+                        index = 2;
+                break;
+            case 5 :
+                if ((computerArr.includes(2) && computerArr.includes(8)) ||
+                    (computerArr.includes(3) && computerArr.includes(4)))
+                        index = 5;
+                break;
+            case 6 :
+                console.log("in case 6");
+                if ((computerArr.includes(0) && computerArr.includes(3)) ||
+                    (computerArr.includes(7) && computerArr.includes(8)) ||
+                    (computerArr.includes(2) && computerArr.includes(4)))
+                        index = 6;
+                break;
+            case 3 :
+                console.log("in case 3");
+                if ((computerArr.includes(0) && computerArr.includes(6)) ||
+                    (computerArr.includes(4) && computerArr.includes(5)))
+                        index = 3;
+                break;
+            case 8 :
+                console.log("in case 8");
+                if ((computerArr.includes(0) && computerArr.includes(4)) ||
+                    (computerArr.includes(6) && computerArr.includes(7)) ||
+                    (computerArr.includes(2) && computerArr.includes(5)))
+                        index = 8;
+                break;
+            case 1 :
+                console.log("in case 1");
+                if ((computerArr.includes(0) && computerArr.includes(2)) ||
+                    (computerArr.includes(4) && computerArr.includes(7)))
+                        index = 1;
+                break;
+
+            default :
+                console.log("No case for empty array index ", emptyArr[i]);
+                break;
+        } //end switch emptyArr[i]
+    } //end for
+    
+    if (index !== -1) {
+        boardArr[index].innerHTML = 'X';
+        boardArr[index].style.pointerEvents = "none";
+    } 
+    return index;
+}
+
+const grabNonBlockingSquare = (numOfOpponentsSquares) => {
+
+    if (boardArr[4].innerHTML === 'X' && numOfOpponentsSquares === 2) {
+        //find the first non-corner square -- which is an odd index
+        //We know there will be at least one satisfying index because
+        //there are only 3 occupied squares at this time.
+        for (i = 0; i < boardArr.length; i++) {
+            if (i % 2) {
+                if (boardArr[i].innerHTML === "") {
+                    return i;
+                }
+            }
+        }
+    } else {
+        if (boardArr[0].innerHTML === "") return 0;
+        else if (boardArr[2].innerHTML === "") return 2;
+        else if (boardArr[6].innerHTML === "") return 6;
+        else if (boardArr[8].innerHTML === "") return 8;
+        else return -1;
+    }
+}
+
+const checkToBlockOpponent = (emptyArr, tempCheck) => {
+
+    let index = -1;
+
+    for (let i = 0; i < emptyArr.length; i++) {
         switch (emptyArr[i]) {
             case 7 :
                 if ((tempCheck.includes(1) && tempCheck.includes(4)) ||
@@ -305,17 +375,62 @@ const checkForBestSquare = () => {
                 break;
         } //end switch emptyArr[i]
     }
+    return index;
+}
+
+
+const checkForBestSquare = () => {
+
+    let tempCheck = [];
+    let emptyArr = [];
+    let computerArr = [];
+    let length = 0;
+    let index = -1;
     
-    //After all of the checks there are still situations where any square is safe to use 
-    //so in that case just get the first empty one.
-    if (index === -1) {
-        for (i = 0; i < boardArr.length; i++) {
-            if (boardArr[i].innerHTML === "") {
-                index = i;
-                break;
-            }
+    for (i = 0; i < boardArr.length; i++) {
+        if (boardArr[i].innerHTML === 'O') {
+            tempCheck.push(i);
+        } else if (boardArr[i].innerHTML === "") {
+            emptyArr.push(i);
+        } else if (boardArr[i].innerHTML === "X") {
+            computerArr.push(i);
         }
     }
+
+    length = tempCheck.length;
+    //Let's just take the middle square if it's available. If not, take a corner.
+    if (length === 1) {
+        if (tempCheck.includes(4)) {
+            boardArr[0].innerHTML = 'X';
+        } else {
+            boardArr[4].innerHTML = "X";
+        }
+        return;
+    } 
+
+    if (playerTwo === "Computer") {
+        //first check the computer for a good square allowing it to win
+        let result = checkComputerBestSquare(emptyArr, computerArr);
+        if (result !== -1) {
+            index = result;
+            return index;
+        }   
+    }
+
+    //If the computer doesn't have a winning square yet then make a best effort
+    //to strategically choose a good square.
+    index = checkToBlockOpponent(emptyArr, tempCheck);
+    if (playerTwo === "Computer" && index === -1) {
+        //There is no block needed to stop the opponent so let's figure out
+        //which square is best based upon whether the computer has the center
+        //square already.
+        result = grabNonBlockingSquare(length);
+        console.log("HERE RESULT IS ", result);
+        if (result !== -1) {
+            index = result;
+        }
+    }
+    console.log("HERE INDEX IS ", index);
     boardArr[index].innerHTML = 'X';
     boardArr[index].style.pointerEvents = "none";
 }
