@@ -24,6 +24,8 @@
     </form>
 
     <label id="currentPlayerLabel" value=""></label>
+    <hr>
+    <label id="scoreHistory" value="Player 1"></label>
     
     <div id="gameBoard" tabindex="-1">
 
@@ -45,11 +47,9 @@
     </div>
    
     <div id="currentPlayer"></div>
-
     
-    <button id="startBtn" tabindex="3" onclick="startGame()">Start Game</button>
-    <button id="resetBtn" onclick="resetGame()">Reset Game</button>
-    
-       
+    <button id="startButton" class="focus-visible" tabindex="3" onclick="startGame()">Start Game</button>
+    <button id="resetButton" class="focus-visible" onclick="resetGame()">Reset Game</button>
+                   
 </body>
 </html>
