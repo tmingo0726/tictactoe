@@ -392,6 +392,16 @@ const checkForOddOddStart = () => {
     return index;
 }
 
+const checkForEvenEvenStart = () => {
+
+    //We know the opponent has 2 existing picks and Computer has 1. We will just grab the 
+    //first open corner square. This is really testing the opponent beginning with 2 diagonal
+    //squares.
+    if (boardArr[0].innerHTML === 'O' && boardArr[8].innerHTML === 'O') return 3;
+    else if (boardArr[2].innerHTML === 'O' && boardArr[6].innerHTML === 'O') return 5; 
+    
+}
+
 const grabNonBlockingSquare = (numOfOpponentsSquares) => {
 
     let index = -1;
@@ -406,7 +416,12 @@ const grabNonBlockingSquare = (numOfOpponentsSquares) => {
     if (boardArr[4].innerHTML === 'X' && numOfOpponentsSquares === 2) {
         //If the opponent has begun the game with 2 odd squares chosen then we need to account for that. 
         //At this point in the game we are guaranteed to get an strategic available square.
-        return(checkForOddOddStart());
+        index = (checkForOddOddStart());
+        if (index !== -1) {
+            return index;
+        } else {
+            return checkForEvenEvenStart();
+        }
     } 
     
     //Here is where the opponent now has > 2 squares occupied. So now let's block if we need to.
