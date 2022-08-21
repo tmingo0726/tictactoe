@@ -169,6 +169,7 @@ const checkIfSame = (str, arr) => {
     return result;
 }
 
+//Checking the rows for winners
 const checkRows = () => {
 
     let tempArr = [];
@@ -194,6 +195,7 @@ const checkRows = () => {
 
 }
 
+//Displays whose turn it is
 const renderCurrentPlayer = () => {
 
     whoseTurn = whoseTurn === playerTwo ?  playerOne : playerTwo;
@@ -202,6 +204,7 @@ const renderCurrentPlayer = () => {
 
 }
 
+//Disables all tic-tac-toe squares so no input allowed
 const disableAllSquares = () => {
 
     boardArr.forEach(boardArr => {
@@ -210,6 +213,7 @@ const disableAllSquares = () => {
 
 }
 
+//Checks to see if the current game ended in a draw
 const checkForDraw = () => {
 
     for (let i = 0; i < boardArr.length; i++) {
@@ -220,6 +224,8 @@ const checkForDraw = () => {
     return true;
 }
 
+
+//This routine enables all the tic-tac-toe squares
 const enableAllSquares = () => {
 
     boardArr.forEach(boardArr => {
@@ -227,6 +233,8 @@ const enableAllSquares = () => {
     });
 
 }
+
+//Master function for beginning the check for a winner.
 const checkForWinner = () => {
 
     if (checkRows() || checkColumns() || checkDiagonals()) {
@@ -250,6 +258,8 @@ const checkForWinner = () => {
     return false;
 }
 
+//This routine returns an array with all of the indexes the opponent has. This is run as part of the 
+//computer choosing logic.
 const getOpponentSquares = () => {
 
     let opponentArr = [];
@@ -263,6 +273,7 @@ const getOpponentSquares = () => {
     return opponentArr;
 }
 
+//This routine returns an array that the computer has currently chosen.
 const getComputerSquares = () => {
     
     let computerSquares = [];
@@ -277,6 +288,7 @@ const getComputerSquares = () => {
 
 }
 
+//This routine returns an array of all the currently empty and available squares.
 const getEmptySquares = () => {
 
     let emptyArr = [];
@@ -290,6 +302,8 @@ const getEmptySquares = () => {
     return emptyArr;
 }
 
+
+//This is the logic used when the checkbox to play the computer is checked/unchecked.
 const computerCheck = () => {
 
     let checkBox = document.getElementById("computer");
@@ -304,13 +318,13 @@ const computerCheck = () => {
         player2.disabled = false;
         document.getElementById("player2Value").value = "";
         alert("Make sure you enter a name for Player 2");
-        //playerTwo.value  = "";
     }
 }
 
 //Instead of focusing on the opponent first, the computer should check to see if it
 //has a winning square to occupy. This function serves a dual purpose depending on the
-//whichTask variable. 
+//whichTask variable. If we are checking to win, whichTask === "win", otherwise it will
+//equal "block".
 const checkToWinOrBlock = (emptySquares, computerSquares, whichTask) => {
     let index = -1;
 
@@ -378,6 +392,9 @@ const checkToWinOrBlock = (emptySquares, computerSquares, whichTask) => {
     return index;
 }
 
+
+//Here we are looking only when the opponent has 2 squares chosen. We want to make the best decision
+//based on the squares the opponent is occupying.
 const checkForOddOddStart = () => {
 
     let index = -1;
@@ -392,6 +409,8 @@ const checkForOddOddStart = () => {
     return index;
 }
 
+//This is only checking even squares related to a diagonal start by the opponent. Remember, the computer
+//will always take the middle square if left open for the computer's first choice.
 const checkForEvenEvenStart = () => {
 
     //We know the opponent has 2 existing picks and Computer has 1. We will just grab the 
