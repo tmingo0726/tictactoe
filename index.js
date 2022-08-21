@@ -309,8 +309,9 @@ const computerCheck = () => {
 }
 
 //Instead of focusing on the opponent first, the computer should check to see if it
-//has a winning square to occupy. That is what this routine does.
-const checkComputerBestSquare = (emptySquares, computerSquares) => {
+//has a winning square to occupy. This function serves a dual purpose depending on the
+//whichTask variable. 
+const checkToWinOrBlock = (emptySquares, computerSquares, whichTask) => {
     let index = -1;
 
     for (i = 0; i < emptySquares.length; i++) {
@@ -370,7 +371,7 @@ const checkComputerBestSquare = (emptySquares, computerSquares) => {
         } //end switch emptySquares[i]
     } //end for
     
-    if (index !== -1) {
+    if (index !== -1 && whichTask === "win") {
         boardArr[index].innerHTML = 'X';
         boardArr[index].style.pointerEvents = "none";
     } 
@@ -386,6 +387,7 @@ const checkForOddOddStart = () => {
     else if (boardArr[1].innerHTML === 'O' && boardArr[5].innerHTML === 'O') index = 2;
     else if (boardArr[7].innerHTML === 'O' && boardArr[3].innerHTML === 'O') index = 6;
     else if (boardArr[7].innerHTML === 'O' && boardArr[5].innerHTML === 'O') index = 8;
+    else if (boardArr[1].innerHTML === 'O' && boardArr[7].innerHTML === 'O') index = 8;
 
     return index;
 }
@@ -408,7 +410,7 @@ const grabNonBlockingSquare = (numOfOpponentsSquares) => {
     } 
     
     //Here is where the opponent now has > 2 squares occupied. So now let's block if we need to.
-    index = checkToBlockOpponent(emptySquares, opponentSquares);
+    index = checkToWinOrBlock(emptySquares, opponentSquares, "block");
 
     //If there were no blocks to choose then we will first grab an available odd square.
     if (index === -1) {
@@ -432,64 +434,6 @@ const grabNonBlockingSquare = (numOfOpponentsSquares) => {
     }
     return index;
 }
-
-const checkToBlockOpponent = (emptySquares, opponentSquares) => {
-
-    let index = -1;
-
-    for (let i = 0; i < emptySquares.length; i++) {
-        switch (emptySquares[i]) {
-            case 7 :
-                if ((opponentSquares.includes(1) && opponentSquares.includes(4)) ||
-                    (opponentSquares.includes(6) && opponentSquares.includes(8)))
-                        index = 7;
-                break;
-            case 2 :
-                if ((opponentSquares.includes(5) && opponentSquares.includes(8)) ||
-                    (opponentSquares.includes(4) && opponentSquares.includes(6)) ||
-                    (opponentSquares.includes(0) && opponentSquares.includes(1)))
-                        index = 2;
-                break;
-            case 5 :
-                if ((opponentSquares.includes(2) && opponentSquares.includes(8)) ||
-                    (opponentSquares.includes(3) && opponentSquares.includes(4)))
-                        index = 5;
-                break;
-            case 6 :
-                console.log("in case 6");
-                if ((opponentSquares.includes(0) && opponentSquares.includes(3)) ||
-                    (opponentSquares.includes(7) && opponentSquares.includes(8)) ||
-                    (opponentSquares.includes(2) && opponentSquares.includes(4)))
-                        index = 6;
-                break;
-            case 3 :
-                console.log("in case 3");
-                if ((opponentSquares.includes(0) && opponentSquares.includes(6)) ||
-                    (opponentSquares.includes(4) && opponentSquares.includes(5)))
-                        index = 3;
-                break;
-            case 8 :
-                console.log("in case 8");
-                if ((opponentSquares.includes(0) && opponentSquares.includes(4)) ||
-                    (opponentSquares.includes(6) && opponentSquares.includes(7)) ||
-                    (opponentSquares.includes(2) && opponentSquares.includes(5)))
-                        index = 8;
-                break;
-            case 1 :
-                console.log("in case 1");
-                if ((opponentSquares.includes(0) && opponentSquares.includes(2)) ||
-                    (opponentSquares.includes(4) && opponentSquares.includes(7)))
-                        index = 1;
-                break;
-
-            default :
-                console.log("No case for empty array index ", emptySquares[i]);
-                break;
-        } //end switch emptySquares
-    }
-    return index;
-}
-
 
 const checkForBestSquare = () => {
 
@@ -517,7 +461,7 @@ const checkForBestSquare = () => {
 
     if (playerTwo === "Computer") {
         //first check the computer for a good square allowing it to win
-        let result = checkComputerBestSquare(emptySquares, computerSquares);
+        result = checkToWinOrBlock(emptySquares, computerSquares, "win");
         if (result !== -1) {
             index = result;
             return index;
@@ -526,7 +470,7 @@ const checkForBestSquare = () => {
 
     //If the computer doesn't have a winning square yet then make a best effort
     //to strategically choose a good square. Check if we need to block first.
-    index = checkToBlockOpponent(emptySquares, opponentSquares);
+    index = checkToWinOrBlock(emptySquares, opponentSquares, "block");
     if (playerTwo === "Computer" && index === -1) {
         //There is no block needed to stop the opponent so let's figure out
         //which square is best based upon whether the computer has the center
